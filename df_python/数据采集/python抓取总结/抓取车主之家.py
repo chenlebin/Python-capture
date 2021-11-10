@@ -24,7 +24,6 @@ rows = []
 # 定义一个序列来暂存单行数据
 row = []
 
-
 '''
 用for循环遍历一个序列，利用这个序列来遍历多个网站
 这个宝马4s店信息的网站总共有33页数，
@@ -35,7 +34,8 @@ for i in range(1, 33):
     # requests.get()方法读取网页
     r = requests.get('https://dealer.16888.com/?tag=search&brandId=57248&page={}'.format(i), headers=headers)
 
-    # 创建一个名为soup的实例
+    # todo 获取bs4实例对象
+    # 创建一个名为bs4的实例
     # 调整编码为utf-8类型
     soup = BeautifulSoup(r.text, 'lxml', from_encoding='utf8')
     # 抓取4s店的 店名,在售车型数量
@@ -75,7 +75,8 @@ place = '全国'
 header = ['公司-' + place, '电话号', '所在地', '在售车型数量']
 # 使用文件操作with open 新建一个文件以追加的模式进行写入数据
 # 修改编码格式为中文国标码GBK，文件取别名为f
-with open('车主之家4s店数据.csv', 'a+', encoding='gbk') as f:
+# newline='' 让文件写入时的换行符不为\n 为'' 保证不产生空行
+with open('车主之家4s店数据.csv', 'a+', encoding='gbk', newline='') as f:
     # 调用csv库将需要写入的文件 f 作为参数
     f_csv = csv.writer(f)
     # writerow  写入单行数据--题头
